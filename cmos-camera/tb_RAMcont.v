@@ -75,6 +75,10 @@ module tb_RAMcont;
 .camera_i_pwdn()
 );
 
+wire dataInterrupt;
+wire frameInterrupt;
+
+
 	 VGA vga_cont(.clk25MHz(clkvga), .VGAData(readBufData), .VGAAddress(readBufAddr), .VGAClk(VGAClk), .vga(vga),
 	              .hsync(hsync), .vsync(vsync), .frameInterrupt(frameInterrupt), .dataInterrupt(dataInterrupt));
                 
@@ -94,7 +98,7 @@ cam_Controller camCont(.pclk(cam_pclk), .vsync(cam_vs), .href(cam_hs), .address(
 		.writeBufWE(cam_hs), 
 		.readBufAddr(readBufAddr), 
 		.readBufData(readBufData), 
-		.readBufClk(readBufClk), 
+		.readBufClk(clkvga), 
 		.LB(LB), 
 		.UB(UB), 
 		.OE(OE), 
@@ -103,15 +107,28 @@ cam_Controller camCont(.pclk(cam_pclk), .vsync(cam_vs), .href(cam_hs), .address(
 		.CE(CE), 
 		.CRE(CRE), 
 		.RAM_CLK(RAM_CLK), 
-		.O_WAIT(O_WAIT), 
+		.O_WAIT(), 
 		.A(A), 
 		.DQ(DQ)
 	);
 
+mt45w8mw16bgx uut_mt45w8mw16bgx (
+       .Addr(A), 
+       .Adv_n(ADV), 
+       .Ce_n(CE), 
+       .Clk(RAM_CLK), 
+       .Cre(CRE), 
+       .Dq(DQ), 
+       .Lb_n(LB), 
+       .Oe_n(OE), 
+       .oWait(),
+       .Ub_n(UB),
+       .We_n(WE) 
+       );
 	initial begin
 		// Initialize Inputs
 		clk = 0;
-		write = 0;
+		write = 1;
 		data = 0;
 		id = 0;
 		writeBufAddr = 0;
