@@ -49,7 +49,7 @@ vmap work work
 
 echo "Compiling Core Verilog UNISIM/Behavioral model"
 vlog -work work ../../../RAMBuffer.v 
-vcom -work work ../../example_design/RAMBuffer_top.vhd
+vcom -work work ../../example_design/RAMBuffer_exdes.vhd
 
 echo "Compiling Test Bench Files"
 
@@ -59,12 +59,12 @@ vcom -work work    ../data_gen.vhd
 vcom -work work    ../addr_gen.vhd
 vcom -work work    ../checker.vhd
 vcom -work work    ../bmg_stim_gen.vhd
-vcom -work work    ../bmg_tb_synth.vhd 
-vcom -work work    ../bmg_tb_top.vhd
+vcom -work work    ../RAMBuffer_synth.vhd 
+vcom -work work    ../RAMBuffer_tb.vhd
 
 
 vlog -work work $env(XILINX)/verilog/src/glbl.v
-vsim  -novopt -t ps -L XilinxCoreLib_ver -L unisims_ver glbl work.bmg_tb_top
+vsim  -novopt -t ps -L XilinxCoreLib_ver -L unisims_ver glbl work.RAMBuffer_tb
 
 #Disabled waveform to save the disk space
 add log -r /*

@@ -1,15 +1,22 @@
 
+ 
+ 
+ 
+
+
+
+
 onerror {resume}
 quietly WaveActivateNextPane {} 0
 
-      add wave -noupdate /bmg_tb_top/status
-      add wave -noupdate /bmg_tb_top/bmg_tb_inst/bmg_port/CLKA
-      add wave -noupdate /bmg_tb_top/bmg_tb_inst/bmg_port/ADDRA
-      add wave -noupdate /bmg_tb_top/bmg_tb_inst/bmg_port/DINA
-      add wave -noupdate /bmg_tb_top/bmg_tb_inst/bmg_port/WEA
-      add wave -noupdate /bmg_tb_top/bmg_tb_inst/bmg_port/CLKB
-      add wave -noupdate /bmg_tb_top/bmg_tb_inst/bmg_port/ADDRB
-      add wave -noupdate /bmg_tb_top/bmg_tb_inst/bmg_port/DOUTB
+      add wave -noupdate /RAMBuffer_tb/status
+      add wave -noupdate /RAMBuffer_tb/RAMBuffer_synth_inst/bmg_port/CLKA
+      add wave -noupdate /RAMBuffer_tb/RAMBuffer_synth_inst/bmg_port/ADDRA
+      add wave -noupdate /RAMBuffer_tb/RAMBuffer_synth_inst/bmg_port/DINA
+      add wave -noupdate /RAMBuffer_tb/RAMBuffer_synth_inst/bmg_port/WEA
+      add wave -noupdate /RAMBuffer_tb/RAMBuffer_synth_inst/bmg_port/CLKB
+      add wave -noupdate /RAMBuffer_tb/RAMBuffer_synth_inst/bmg_port/ADDRB
+      add wave -noupdate /RAMBuffer_tb/RAMBuffer_synth_inst/bmg_port/DOUTB
 
 TreeUpdate [SetDefaultTree]
 WaveRestoreCursors {{Cursor 1} {0 ps} 0}

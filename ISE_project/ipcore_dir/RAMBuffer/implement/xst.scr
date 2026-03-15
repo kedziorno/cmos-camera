@@ -1,12 +1,12 @@
 run
 -ifmt VHDL
--ent RAMBuffer_top
+-ent RAMBuffer_exdes
 -p xc3s1200e-fg320-4
 -ifn xst.prj
 -write_timing_constraints No
 -iobuf YES
 -max_fanout 100
--ofn RAMBuffer_top 
+-ofn RAMBuffer_exdes 
 -ofmt NGC
 -bus_delimiter ()
 -hierarchy_separator /

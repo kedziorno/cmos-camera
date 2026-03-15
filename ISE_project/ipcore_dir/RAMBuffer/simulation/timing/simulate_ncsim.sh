@@ -59,20 +59,20 @@ ncvhdl -v93 -work work    ../data_gen.vhd
 ncvhdl -v93 -work work    ../addr_gen.vhd
 ncvhdl -v93 -work work    ../checker.vhd
 ncvhdl -v93 -work work    ../bmg_stim_gen.vhd
-ncvhdl -v93 -work work    ../bmg_tb_synth.vhd 
-ncvhdl -v93 -work work    ../bmg_tb_top.vhd
+ncvhdl -v93 -work work    ../RAMBuffer_synth.vhd 
+ncvhdl -v93 -work work    ../RAMBuffer_tb.vhd
 
 echo "Compiling SDF file"
 ncsdfc ../../implement/results/routed.sdf -output ./routed.sdf.X
 
 echo "Generating SDF command file"
 echo 'COMPILED_SDF_FILE = "routed.sdf.X",' > sdf.cmd
-echo 'SCOPE = :BMG_TB_INST:BMG_PORT,' >> sdf.cmd
+echo 'SCOPE = :RAMBuffer_synth_inst:BMG_PORT,' >> sdf.cmd
 echo 'MTM_CONTROL = "MAXIMUM";' >> sdf.cmd
 
 
 echo "Elaborating Design"
-ncelab -access +rwc glbl -sdf_cmd_file sdf.cmd $work.bmg_tb_top
+ncelab -access +rwc glbl -sdf_cmd_file sdf.cmd $work.RAMBuffer_tb
 
 echo "Simulating Design"
-ncsim -gui -input @"simvision -input wave_ncsim.sv" $work.bmg_tb_top
+ncsim -gui -input @"simvision -input wave_ncsim.sv" $work.RAMBuffer_tb

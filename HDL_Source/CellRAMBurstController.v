@@ -47,10 +47,10 @@ module CellRAMBurstController(
      input  [15:0]data,                             //
      input  [15:0]id,                               //
      
-     input  [10:0]writeBufAddr,                     //
+     input  [10:0]writeBufAddr,                     // -- cam address gen
      input  [7:0]writeBufData,                      //Write buffer interface.
-     input  writeBufClk,                            //
-     input  writeBufWE,                             //
+     input  writeBufClk,                            // -- pclk cam
+     input  writeBufWE,                             // -- href cam
      
      input  [9:0]readBufAddr,                       //
      output reg [15:0]readBufData = 16'h0000,       //Read buffer interface.

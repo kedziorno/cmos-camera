@@ -50,7 +50,7 @@
 mkdir work
 echo "Compiling Core Verilog UNISIM/Behavioral model"
 ncvlog -work work ../../../RAMBuffer.v 
-ncvhdl -v93 -work work ../../example_design/RAMBuffer_top.vhd
+ncvhdl -v93 -work work ../../example_design/RAMBuffer_exdes.vhd
 
 echo "Compiling Test Bench Files"
 
@@ -60,12 +60,12 @@ ncvhdl -v93 -work work    ../data_gen.vhd
 ncvhdl -v93 -work work    ../addr_gen.vhd
 ncvhdl -v93 -work work    ../checker.vhd
 ncvhdl -v93 -work work    ../bmg_stim_gen.vhd
-ncvhdl -v93 -work work    ../bmg_tb_synth.vhd 
-ncvhdl -v93 -work work    ../bmg_tb_top.vhd
+ncvhdl -v93 -work work    ../RAMBuffer_synth.vhd 
+ncvhdl -v93 -work work    ../RAMBuffer_tb.vhd
 
 echo "Elaborating Design"
 ncvlog -work work $XILINX/verilog/src/glbl.v
-ncelab -access +rwc glbl work.bmg_tb_top
+ncelab -access +rwc glbl work.RAMBuffer_tb
 
 echo "Simulating Design"
-ncsim -gui -input @"simvision -input wave_ncsim.sv" work.bmg_tb_top
+ncsim -gui -input @"simvision -input wave_ncsim.sv" work.RAMBuffer_tb

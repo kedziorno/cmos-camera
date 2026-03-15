@@ -3,7 +3,7 @@
 
 --------------------------------------------------------------------------------
 --
--- BLK MEM GEN v6_3 Core - Stimulus Generator For Simple Dual Port RAM
+-- BLK MEM GEN v7_3 Core - Stimulus Generator For Simple Dual Port RAM
 --
 --------------------------------------------------------------------------------
 --
@@ -163,7 +163,7 @@ SIGNAL   PORTB_RD_L2             : STD_LOGIC  := '0';
 SIGNAL   PORTA_WR_R2             : STD_LOGIC  := '0';
 SIGNAL   PORTA_WR_R1             : STD_LOGIC  := '0';
 
-CONSTANT WR_RD_DEEP_COUNT :INTEGER :=50;
+CONSTANT WR_RD_DEEP_COUNT :INTEGER :=8;
 CONSTANT WR_DEEP_COUNT    : INTEGER := if_then_else((11 <= 10),WR_RD_DEEP_COUNT,
                                               ((16/8)*WR_RD_DEEP_COUNT));
 CONSTANT RD_DEEP_COUNT    : INTEGER := if_then_else((10 <= 11),WR_RD_DEEP_COUNT,
@@ -171,15 +171,15 @@ CONSTANT RD_DEEP_COUNT    : INTEGER := if_then_else((10 <= 11),WR_RD_DEEP_COUNT,
 
 BEGIN
 
-   ADDRA <= WRITE_ADDR(10 DOWNTO 0) AFTER 50 ns;
-   DINA  <= DINA_INT AFTER 50 ns;
-   ADDRB <= READ_ADDR(9 DOWNTO 0) AFTER 50 ns;
+   ADDRA <= WRITE_ADDR(10 DOWNTO 0) ;
+   DINA  <= DINA_INT ;
+   ADDRB <= READ_ADDR(9 DOWNTO 0) when (DO_READ='1') else (OTHERS=>'0');
    CHECK_DATA <= DO_READ;
 
   RD_ADDR_GEN_INST:ENTITY work.ADDR_GEN
     GENERIC MAP(
-      C_MAX_DEPTH => 1024 
-    )
+      C_MAX_DEPTH => 1024 ,
+      RST_INC => 1    )
     PORT MAP(
        CLK        => CLKB,
        RST        => TB_RST,
@@ -191,7 +191,8 @@ BEGIN
 
   WR_ADDR_GEN_INST:ENTITY work.ADDR_GEN
     GENERIC MAP( 
-      C_MAX_DEPTH => 2048    )
+      C_MAX_DEPTH => 2048,
+      RST_INC => 2    )
     PORT MAP(
        CLK        => CLKA,
        RST        => TB_RST,
@@ -285,7 +286,8 @@ BEGIN
         LATCH_PORTA_WR_COMPLETE<='0';
       ELSIF(PORTA_WR_COMPLETE='1') THEN
         LATCH_PORTA_WR_COMPLETE <='1';
-      ELSIF(PORTB_RD_HAPPENED='1') THEN
+      --ELSIF(PORTB_RD_HAPPENED='1') THEN
+      ELSE
         LATCH_PORTA_WR_COMPLETE<='0';
       END IF;
     END IF;
@@ -421,7 +423,7 @@ BEGIN
 
  
  
-   WEA(0) <= DO_WRITE AFTER 50 ns;
+   WEA(0) <= DO_WRITE ;
  
 
 END ARCHITECTURE;

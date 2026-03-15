@@ -1,7 +1,7 @@
 
 --------------------------------------------------------------------------------
 --
--- BLK MEM GEN v6_3 Core - Checker
+-- BLK MEM GEN v7_3 Core - Checker
 --
 --------------------------------------------------------------------------------
 --
@@ -92,7 +92,9 @@ END CHECKER;
 
 ARCHITECTURE CHECKER_ARCH OF CHECKER IS
   SIGNAL EXPECTED_DATA : STD_LOGIC_VECTOR(READ_WIDTH-1 DOWNTO 0);
+  SIGNAL DATA_IN_R: STD_LOGIC_VECTOR(READ_WIDTH-1 DOWNTO 0);
   SIGNAL EN_R : STD_LOGIC := '0';
+  SIGNAL EN_2R : STD_LOGIC := '0';
 --DATA PART CNT DEFINES THE ASPECT RATIO AND GIVES THE INFO TO THE DATA GENERATOR TO PROVIDE THE DATA EITHER IN PARTS OR COMPLETE DATA IN ONE SHOT
 --IF READ_WIDTH > WRITE_WIDTH DIVROUNDUP RESULTS IN '1' AND DATA GENERATOR GIVES THE DATAOUT EQUALS TO MAX OF (WRITE_WIDTH, READ_WIDTH)
 --IF READ_WIDTH < WRITE-WIDTH DIVROUNDUP RESULTS IN > '1' AND DATA GENERATOR GIVES THE DATAOUT IN TERMS OF PARTS(EG 4 PARTS WHEN WRITE_WIDTH 32 AND READ WIDTH 8)
@@ -106,8 +108,12 @@ BEGIN
      IF(RISING_EDGE(CLK)) THEN
        IF(RST= '1') THEN
      	  EN_R <= '0';
+     	  EN_2R <= '0';
+          DATA_IN_R <= (OTHERS=>'0');
        ELSE
 	      EN_R <= EN;
+	      EN_2R <= EN_R;
+          DATA_IN_R <= DATA_IN;
        END IF;        
      END IF;
    END PROCESS;
@@ -121,15 +127,15 @@ BEGIN
       PORT MAP (
             CLK      => CLK,
 			RST      => RST,
-            EN       => EN_R,
+            EN       => EN_2R,
             DATA_OUT => EXPECTED_DATA
 	  );
 
    PROCESS(CLK)
    BEGIN
       IF(RISING_EDGE(CLK)) THEN
-         IF(EN_R='1') THEN
-        	 IF(EXPECTED_DATA = DATA_IN) THEN
+         IF(EN_2R='1') THEN
+        	 IF(EXPECTED_DATA = DATA_IN_R) THEN
 	            ERR_DET<='0';
         	 ELSE
 	            ERR_DET<= '1';
