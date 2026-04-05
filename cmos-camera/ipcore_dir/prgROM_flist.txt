@@ -1,0 +1,17 @@
+# Output products list for <prgROM>
+_xmsgs/pn_parser.xmsgs
+prgROM/blk_mem_gen_v7_3_readme.txt
+prgROM/doc/blk_mem_gen_v7_3_vinfo.html
+prgROM/doc/pg058-blk-mem-gen.pdf
+prgROM.asy
+prgROM.gise
+prgROM.mif
+prgROM.ngc
+prgROM.sym
+prgROM.v
+prgROM.veo
+prgROM.xco
+prgROM.xise
+prgROM_flist.txt
+prgROM_xmdf.tcl
+summary.log

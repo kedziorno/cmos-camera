@@ -134,7 +134,40 @@ module CellRAMBurstController(
     );
 
      //--------------------------Cellular RAM State Machine--------------------------------
+     `ifdef XILINX_ISIM
+     localparam IDLE                = "IDLE";
      
+     localparam CONFIG0             = "CONFIG0";     
+     localparam CONFIG1             = "CONFIG1";
+     localparam CONFIG2             = "CONFIG2";
+     localparam CONFIG3             = "CONFIG3";
+     localparam CONFIG4             = "CONFIG4";
+     localparam CONFIG5             = "CONFIG5";
+     localparam CONFIG6             = "CONFIG6";
+     localparam CONFIG7             = "CONFIG7";
+     localparam CONFIG8             = "CONFIG8";
+     localparam CONFIG9             = "CONFIG9";
+     localparam CONFIG10            = "CONFIG10";
+     localparam CONFIG11            = "CONFIG11";     
+     
+     localparam WRITE_BYTE0         = "WRITE_BYTE0";
+     localparam WRITE_BYTE1         = "WRITE_BYTE1";
+     localparam WRITE_BYTE2         = "WRITE_BYTE2";     
+     localparam WRITE_BYTE3         = "WRITE_BYTE3";
+     localparam WRITE_BYTE4         = "WRITE_BYTE4";
+     
+     localparam WRITE_RBC0          = "WRITE_RBC0";
+     localparam WRITE_RBC1          = "WRITE_RBC1"; 
+     
+     localparam READ_BYTE0          = "READ_BYTE0";
+     localparam READ_BYTE1          = "READ_BYTE1";
+     localparam READ_BYTE2          = "READ_BYTE2";
+     localparam READ_BYTE3          = "READ_BYTE3";
+     localparam READ_BYTE4          = "READ_BYTE4";     
+     
+     localparam READ_RBC0           = "READ_RBC0";
+     localparam READ_RBC1           = "READ_RBC1";
+     `else
      localparam IDLE                = 5'h00;
      
      localparam CONFIG0             = 5'h01;     
@@ -167,9 +200,14 @@ module CellRAMBurstController(
      
      localparam READ_RBC0           = 5'h19;
      localparam READ_RBC1           = 5'h1A;
-     
+     `endif
+     `ifdef XILINX_ISIM
+     reg [8*11-1:0]state                 = CONFIG0;
+     reg [8*11-1:0]next_state            = CONFIG0;
+     `else
      reg [4:0]state                 = CONFIG0;
      reg [4:0]next_state            = CONFIG0;
+     `endif
      reg [7:0]state_cntr            = 8'h00;
      reg clk_enable                 = 1'b0;
      

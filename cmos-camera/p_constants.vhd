@@ -177,13 +177,13 @@ package p_constants is
   constant c_all_frames                      : integer := c_camera_frame_length * number_frames_to_catch;
   constant c_sdcard_end_address              : integer := c_all_frames - 512;
 
-  --synthesis translate_off
-  type camera_frame_t is
-    array (0 to c_all_frames - 1) of
-      std_logic_vector(c_camera_color_bits - 1 downto 0);
-
-  shared variable captured_frame_m : camera_frame_t;
-  --synthesis translate_on
+  ----synthesis translate_off
+  --type camera_frame_t is
+  --  array (0 to c_all_frames - 1) of
+  --    std_logic_vector(c_camera_color_bits - 1 downto 0);
+  --
+  --shared variable captured_frame_m : camera_frame_t;
+  ----synthesis translate_on
 
   function to_string_1 (
     s : std_logic_vector
@@ -387,7 +387,7 @@ package body p_constants is
           rgb565_g                             := rgb888 (15 downto 10);
           rgb565_b                             := rgb888 (7 downto 3);
           rgb565                               := rgb565_r & rgb565_g & rgb565_b;
-          captured_frame_m (v_start_address)   := rgb565;
+          --captured_frame_m (v_start_address)   := rgb565;
           v_start_address                      := v_start_address + 1;
 
           if (c_debug = true) then

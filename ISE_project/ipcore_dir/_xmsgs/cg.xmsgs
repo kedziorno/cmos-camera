@@ -11,25 +11,31 @@
 <msg type="warning" file="coreutil" num="882" delta="old" >Repository directory &apos;<arg fmt="%s" index="1">/home/user/workspace/melexis_mlx90641/ipcore_dir/</arg>&apos; does not match index file entry &apos;<arg fmt="%s" index="2"></arg>&apos;.
 </msg>
 
+<msg type="warning" file="sim" num="991" delta="old" >The project IP instance &apos;<arg fmt="%s" index="1">prgROM</arg>&apos; for IP &apos;<arg fmt="%s" index="2">Block Memory Generator v6.3</arg>&apos; was generated with a different version of the IP than is currently in the IP Catalog. It was originally generated using IP with the packaged timestamp &apos;<arg fmt="%s" index="3">2011-10-21+13:54</arg>&apos;; the IP in the current catalog has a different packaged timestamp &apos;<arg fmt="%s" index="4">2012-03-20+18:34</arg>&apos;. This mismatch is due to changes made to the IP in the user repositories. It may affect some functionality of the IP, if there are differences between these two versions of the IP.
+</msg>
+
 <msg type="info" file="sim" num="172" delta="old" >Generating IP...
 </msg>
 
-<msg type="warning" file="sim" num="0" delta="new" ><arg fmt="%s" index="1">A core named &apos;RAMBuffer&apos; already exists in the project. Output products for this core may be overwritten.</arg>
+<msg type="error" file="sim" num="0" delta="new" ><arg fmt="%s" index="1">No COE file loadedERROR:sim:781 - An invalid core configuration has been detected during</arg>
 </msg>
 
-<msg type="warning" file="sim" num="0" delta="new" ><arg fmt="%s" index="1">A core named &apos;RAMBuffer&apos; already exists in the project. Output products for this core may be overwritten.</arg>
+<msg type="error" file="sim" num="0" delta="new" ><arg fmt="%s" index="1">   Customization. Core parameters will be reset to their default values.</arg>
 </msg>
 
-<msg type="info" file="sim" num="0" delta="new" ><arg fmt="%s" index="1">Pre-processing HDL files for &apos;RAMBuffer&apos;...</arg>
+<msg type="warning" file="sim" num="0" delta="new" ><arg fmt="%s" index="1">A core named &apos;blk_mem_gen_v6_3&apos; already exists in the project. Output products for this core may be overwritten.</arg>
 </msg>
 
-<msg type="warning" file="sim" num="0" delta="new" ><arg fmt="%s" index="1">Overwriting existing file /home/user/_WORKSPACE_/cmos-camera/ISE_project/ipcore_dir/tmp/_cg/RAMBuffer/doc/blk_mem_gen_v7_3_vinfo.html with file from view xilinx_documentation</arg>
+<msg type="warning" file="sim" num="0" delta="new" ><arg fmt="%s" index="1">A core named &apos;blk_mem_gen_v6_3&apos; already exists in the project. Output products for this core may be overwritten.</arg>
 </msg>
 
-<msg type="info" file="sim" num="949" delta="new" >Finished generation of ASY schematic symbol.
+<msg type="info" file="sim" num="0" delta="new" ><arg fmt="%s" index="1">Pre-processing HDL files for &apos;blk_mem_gen_v6_3&apos;...</arg>
 </msg>
 
-<msg type="info" file="sim" num="948" delta="new" >Finished FLIST file generation.
+<msg type="info" file="sim" num="949" delta="old" >Finished generation of ASY schematic symbol.
+</msg>
+
+<msg type="info" file="sim" num="948" delta="old" >Finished FLIST file generation.
 </msg>
 
 </messages>

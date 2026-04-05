@@ -9,6 +9,7 @@ module VGA(
 	 
 	 output [15:0]vga,
 	 
+   output blank,
 	 output reg hsync = 1'b1,
 	 output reg vsync = 1'b1,
 	 output reg frameInterrupt = 1'b0,
@@ -62,6 +63,7 @@ module VGA(
             VGAAddress <= VGAAddress + 1'b1;  
     end
 	 
+   assign blank = (VGARow >= 480) || (VGAPixel >= 640);
 	 //Assign VGA output.
 	 assign vga = (VGARow < 480 && VGAPixel > 0 && VGAPixel < 641) ? 
 	              {VGAData[12], VGAData[11], VGAData[10], VGAData[9],

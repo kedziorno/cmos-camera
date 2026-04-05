@@ -23,6 +23,8 @@ module Main(
 	 output [15:0]vga,
 	 output hsync,
 	 output vsync,
+   output vgaclk,
+   output blank,
 	 
 	 //I2C controller.
 	 inout camsda,          //I2C data line.
@@ -104,6 +106,8 @@ module Main(
 	 
 	 assign xclk = clk23MHz;
 	 
+   assign vgaclk = VGAClk;
+   
 	 /*********************************************************************************************/
 	 
 	 or or1(vgaorout, ack0, ack2);
@@ -146,7 +150,7 @@ module Main(
 											  
 	 //VGA controller.
 	 VGA vga_cont(.clk25MHz(clk25MHz), .VGAData(readBufData), .VGAAddress(readBufAddr), .VGAClk(VGAClk), .vga(vga),
-	              .hsync(hsync), .vsync(vsync), .frameInterrupt(frameInterrupt), .dataInterrupt(dataInterrupt));
+	              .hsync(hsync), .vsync(vsync), .frameInterrupt(frameInterrupt), .dataInterrupt(dataInterrupt), .blank(blank));
 	
      //I2C controller.
 	 I2CTest1 i2c(.SCL(camscl), .SDA(camsda), .reset(btn), .write(write), .clk(clk), .id(id), .din(outdata),
