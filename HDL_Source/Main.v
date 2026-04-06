@@ -128,6 +128,11 @@ module Main(
 	 dataMUX datamux(.read(read), .id(id), .i2cdata({8'h00, i2cdata}), .i2cstatus(i2cstatus), .dout(in_port), 
 	                 .uartdata({8'h00, uartdata}), .txcount({4'h0, txcount}), .rxcount({4'h0, rxcount}),
 						  .busy({15'h0000, busy}), .sync({15'h0000, camvert})); 
+                   always @(id) begin
+                      if (id == 16'h0009) begin
+                      $display("%t sync", $time);
+                      end
+                   end
 	 
 	 //Program ROM for NMPSM3.
 	 prgROM ROM(.clka(clk), .addra(address[8:0]), .douta(inst));	  

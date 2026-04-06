@@ -107,19 +107,17 @@ module CellRAMBurstController(
      reg  [10:0]readCounter    = 11'h000;
      
      //-----------------------------------Block RAMs---------------------------------------
-     
-     parameter RAM_WIDTH     = 16;
-    parameter RAM_ADDR_BITS = 10;
 
-    /*read buffer*/
-    reg [RAM_WIDTH-1:0] readBuffer [(2**RAM_ADDR_BITS)-1:0];
-
-    always @(posedge clk)
-        if (sinkWE)
-            readBuffer[sinkAddr] <= DQ;
-      
-    always @(posedge readBufClk)
-        readBufData <= readBuffer[readBufAddr];
+    /*sink read*/
+    read_sink sink_read (
+        .clk(clk),
+        .readBufClk(readBufClk),
+        .sinkWE(sinkWE),
+        .sinkAddr(sinkAddr),
+        .DQ(DQ),
+        .readBufAddr(readBufAddr),
+        .readBufData(readBufData)
+    );
 
     /*write buffer*/
     RAMBuffer writeBuffer (
@@ -244,42 +242,52 @@ module CellRAMBurstController(
           /*********************************Interface Control********************************/
           if(id == BURST_READ && write && !busy && bytesToRead) begin
               state <= READ_BYTE0;
+              $display ("%t - state READ_BYTE0", $time);
           end
           
           if(id == BURST_WRITE && write && !busy && bytesToWrite) begin
               state <= WRITE_BYTE0;
+              $display ("%t - state WRITE_BYTE0", $time);
           end
          
           if(id == WRITE_LENGTH && write && !busy) begin
               bytesToWrite <= data[10:0];
+              $display ("%t - setup bytesToWrite %d (0x%h)", $time, data[10:0], data[10:0]);
           end
           
           if(id == READ_LENGTH && write && !busy) begin
               bytesToRead <= data[10:0];
+              $display ("%t - setup bytesToRead %d (0x%h)", $time, data[10:0], data[10:0]);
           end
           
           if(id == WRITE_ADDR_H  && write && !busy) begin
               burstWriteAddr[22:16] <= data[6:0];
+              $display ("%t - setup burstWriteAddr H %d (0x%h)", $time, data[6:0], data[6:0]);
           end
           
           if(id == WRITE_ADDR_L && write && !busy) begin
               burstWriteAddr[15:0] <= data;
+              $display ("%t - setup burstWriteAddr L %d (0x%h)", $time, data, data);
           end
           
           if(id == READ_ADDR_H && write && !busy) begin
               burstReadAddr[22:16] <= data[6:0];
+              $display ("%t - setup burstReadAddr H %d (0x%h)", $time, data[6:0], data[6:0]);
           end
           
           if(id == READ_ADDR_L && write && !busy) begin
               burstReadAddr[15:0] <= data;
+              $display ("%t - setup burstReadAddr L %d (0x%h)", $time, data, data);
           end
           
           if(id == SET_WB_ADDR && write && !busy) begin
               sourceAddr <= data[9:0];
+              $display ("%t - setup SET_WB_ADDR source_addr %d (0x%h)", $time, data[9:0], data[9:0]);
           end
           
           if(id == SET_RB_ADDR && write && !busy) begin
               sinkAddr <= data[9:0];
+              $display ("%t - setup SET_RB_ADDR sink_addr %d (0x%h)", $time, data[9:0], data[9:0]);
           end
                 
           /*********************Cellular RAM Configuration State Machine*********************/              
