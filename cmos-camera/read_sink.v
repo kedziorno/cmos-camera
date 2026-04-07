@@ -14,10 +14,17 @@ output reg [15:0] readBufData
     /*read buffer*/
     reg [RAM_WIDTH-1:0] readBuffer [(2**RAM_ADDR_BITS)-1:0];
 
+    initial begin : init
+      integer i;
+      for (i = 0; i < (2**RAM_ADDR_BITS); i = i + 1) begin
+        readBuffer[i] = 0;
+      end
+    end
+
     always @(posedge clk)
         if (sinkWE)
             readBuffer[sinkAddr] <= DQ;
-      
+
     always @(posedge readBufClk)
         readBufData <= readBuffer[readBufAddr];
 

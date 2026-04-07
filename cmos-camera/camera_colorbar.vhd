@@ -249,30 +249,29 @@ begin
       count := 0;
       counth1 := 0;
       counth0 := 0;
-      hs_state <= swait4vsync;
+      hs_state <= shref1;
       href_i <= '0';
     elsif (falling_edge (camera_i_xclk)) then
       case (hs_state) is
-        when swait4vsync =>
-          if (href_time = '1') then
-            hs_state <= shref1;
-          end if;
         when shref1 =>
-          href_i <= '1';
-          if (counth1 = c_href1 - 1) then
-            hs_state <= shref0;
-            counth1 := 0;
-          else
-            counth1 := counth1 + 1;
+          if (href_time = '1') then
+            href_i <= '1';
+            if (counth1 = c_href1 - 1) then
+              hs_state <= shref0;
+              counth1 := 0;
+            else
+              counth1 := counth1 + 1;
+            end if;
           end if;
         when shref0 =>
           href_i <= '0';
           if (counth0 = c_href0 - 1) then
-            hs_state <= swait4vsync;
+            hs_state <= shref1;
             counth0 := 0;
           else
             counth0 := counth0 + 1;
           end if;
+        when others => null;
       end case;
     end if;
   end process p2_href;
@@ -315,10 +314,58 @@ begin
             else
               pt_state <= s2; -- next color
             end if;
-          end case;
+        end case;
       end if;
     end process p3_pixeltime;
   end generate g_source_colorbar;
+
+  g_source_lines : if (c_source = t_lines) generate
+    -- Show indexed lines HREF width from virtual camera on VGA display on falling edge pclk
+    camera_o_d <= pixel_time_data when href_i = '1' else (others => '0');
+    p3_pixeltime : process (camera_i_xclk, camera_i_rst) is
+      variable count1 : integer range 0 to c_href1 - 1;
+      variable count2 : integer range 0 to c_href0 - 1;
+      constant c_vs_index : integer := 256;
+      variable vs_index : integer range 0 to c_vs_index - 1;
+    begin
+      if (camera_i_rst = '0') then
+        pixel_time_data <= (others => '0');
+        pt_state <= s2;
+        count1 := 0;
+        count2 := 0;
+        vs_index := 1;
+      elsif (falling_edge (camera_i_xclk)) then
+        case (pt_state) is
+          when s2 =>
+            if (href_time = '1') then
+              if (count1 = c_href1 - 1) then
+                pt_state <= s3;
+                count1 := 0;
+              else
+                pixel_time_data <= std_logic_vector (to_unsigned (vs_index, pixel_time_data'left + 1));
+                count1 := count1 + 1;
+              end if;
+            else
+              pixel_time_data <= (others => '0');
+            end if;
+          when s3 =>
+            if (count2 = c_href0 - 1) then
+              if (vs_index = c_vs_index - 1) then
+                pt_state <= s1;
+                vs_index := 0;
+              else
+                vs_index := vs_index + 1;
+              end if;
+              count2 := 0;
+              pt_state <= s2;
+            else
+              count2 := count2 + 1;
+            end if;
+          when others => null;
+        end case;
+      end if;
+    end process p3_pixeltime;
+  end generate g_source_lines;
 
   -- only flip source clock
   camera_o_pclk <= camera_i_xclk;

@@ -53,7 +53,7 @@ module CellRAMBurstController(
      input  writeBufWE,                             // -- href cam
      
      input  [9:0]readBufAddr,                       //
-     output reg [15:0]readBufData = 16'h0000,       //Read buffer interface.
+     output [15:0]readBufData,       //Read buffer interface.
      input  readBufClk,                             //
      
      //Cellular RAM interface.
@@ -108,6 +108,8 @@ module CellRAMBurstController(
      
      //-----------------------------------Block RAMs---------------------------------------
 
+    wire [15:0] rbd;
+    assign readBufData = rbd;
     /*sink read*/
     read_sink sink_read (
         .clk(clk),
@@ -116,9 +118,9 @@ module CellRAMBurstController(
         .sinkAddr(sinkAddr),
         .DQ(DQ),
         .readBufAddr(readBufAddr),
-        .readBufData(readBufData)
+        .readBufData(rbd)
     );
-
+        
     /*write buffer*/
     RAMBuffer writeBuffer (
         .clka(writeBufClk),     // input clka

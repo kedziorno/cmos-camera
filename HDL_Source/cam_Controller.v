@@ -38,7 +38,8 @@ module cam_Controller(
           if(counterStart)
               pixelCounter <= pixelCounter + 1;
                 
-          if(pixelCounter == 780 || pixelCounter == 1560)
+//          if(pixelCounter == 780 || pixelCounter == 1560)
+          if(pixelCounter == 1560)
               dataInterrupt <= 1;
      end
 

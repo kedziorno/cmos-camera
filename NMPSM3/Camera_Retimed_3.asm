@@ -222,13 +222,13 @@ Interrupt0:
     load int_reg0 read_addr_h                   ;set upper address of cell RAM read.
     out  int_reg0 READ_ADDR_H                   ;
 
-    load int_reg0 #320                          ;Prepare to transfer 320 words from-->
+    load int_reg0 #640                          ;Prepare to transfer 320 words from-->
     out  int_reg0 READ_LENGTH                   ;cell RAM to read buffer.   
 
     load int_reg0 #0                            ;Initiate burst read.
     out  int_reg0 BURST_READ                    ;
 
-    add  read_addr_l #320                       ;Move to next cell RAM read address block. 
+    add  read_addr_l #640                       ;Move to next cell RAM read address block. 
     addc read_addr_h #0                         ;
 
     rtie
@@ -242,13 +242,13 @@ Interrupt1:
     load int_reg0 write_addr_h                  ;set upper address of cell RAM write.
     out  int_reg0 WRITE_ADDR_H                  ;
 
-    load int_reg0 #320                          ;Prepare to transfer 320 words from-->
+    load int_reg0 #640                          ;Prepare to transfer 320 words from-->
     out  int_reg0 WRITE_LENGTH                  ;write buffer to cell RAM.   
 
     load int_reg0 #0                            ;Initiate burst write.
     out  int_reg0 BURST_WRITE                   ;
 
-    add  write_addr_l #320                      ;Move to next cell RAM write address block. 
+    add  write_addr_l #640                      ;Move to next cell RAM write address block. 
     addc write_addr_h #0                        ;
 
     comp write_addr_l #$B000                    ;Is lower pointer at end of buffer?
