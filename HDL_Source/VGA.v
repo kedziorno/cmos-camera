@@ -35,7 +35,8 @@ module VGA(
 		      dataInterrupt <= 1'b1;
 		  if(VGARow == 479 && !VGAPixel)
 		      dataInterrupt <= 1'b1;
-		  if(VGARow <= 478 && (!VGAPixel || VGAPixel == 399))
+//		  if(VGARow <= 478 && (!VGAPixel || VGAPixel == 399))
+		  if(VGARow <= 478 && (!VGAPixel))
 		      dataInterrupt <= 1'b1;		  
 		  
 		  if(VGAPixel == 799) begin						//Start new line.
