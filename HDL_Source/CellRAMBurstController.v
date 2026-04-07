@@ -110,8 +110,13 @@ module CellRAMBurstController(
 
     wire [15:0] rbd;
     assign readBufData = rbd;
+//    reg readbufclk2x = 0;
+//    always @(posedge clk) begin
+//      readbufclk2x <= ~readbufclk2x;
+//    end
     /*sink read*/
     read_sink sink_read (
+//        .clk(readbufclk2x),
         .clk(clk),
         .readBufClk(readBufClk),
         .sinkWE(sinkWE),

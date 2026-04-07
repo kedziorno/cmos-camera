@@ -61,11 +61,11 @@ module VGA(
 		      vsync <= 1'b1;
 	 
 		  if(VGARow < 480 && VGAPixel < 640) begin 			//Within visible range.
-            if (VGAAddress == 2**10-1) begin
-            VGAAddress = 0;
-            end else begin
+//            if (VGAAddress == 2**10-1) begin
+//            VGAAddress = 0;
+//            end else begin
             VGAAddress <= VGAAddress + 1'b1;  
-            end
+//            end
             end
             
     end

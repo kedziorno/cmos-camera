@@ -142,7 +142,11 @@ module Main(
 	               .INSTRUCTION(inst), .IN_PORT(in_port), .READ_STROBE(read), .WRITE_STROBE(write), .IRQ_ACK0(ack0),
 						.IRQ_ACK1(ack1), .IRQ_ACK2(ack2), .IRQ_ACK3(ack3), .ADDRESS(address), .OUT_PORT(outdata), 
 						.PORT_ID(id));
-	
+   
+//   reg readbufclk2x = 0;
+//   always @(posedge VGAClk) begin
+//    readbufclk2x <= ~readbufclk2x;
+//   end
 	 //Cellular RAM controller.
 	 CellRAMBurstController RAMcont(.busy(busy), .clk(clk), .write(write), .data(outdata), .id(id), 
 	                                .writeBufAddr(camAddress),
