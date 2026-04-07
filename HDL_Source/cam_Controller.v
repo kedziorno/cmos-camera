@@ -31,7 +31,8 @@ module cam_Controller(
                 counterStart <= 1;
           end
           
-          if(pixelCounter == 1560) begin
+//          if(pixelCounter == 1560) begin
+          if(pixelCounter == 780) begin
               counterStart <= 0;
           end
           
