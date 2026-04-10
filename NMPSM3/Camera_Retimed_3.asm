@@ -222,13 +222,13 @@ Interrupt0:
     load int_reg0 read_addr_h                   ;set upper address of cell RAM read.
     out  int_reg0 READ_ADDR_H                   ;
 
-    load int_reg0 #320                          ;Prepare to transfer 320 words from-->
+    load int_reg0 #160                          ;Prepare to transfer 320 words from-->
     out  int_reg0 READ_LENGTH                   ;cell RAM to read buffer.   
 
     load int_reg0 #0                            ;Initiate burst read.
     out  int_reg0 BURST_READ                    ;
 
-    add  read_addr_l #320                       ;Move to next cell RAM read address block. 
+    add  read_addr_l #160                       ;Move to next cell RAM read address block. 
     addc read_addr_h #0                         ;
 
     rtie

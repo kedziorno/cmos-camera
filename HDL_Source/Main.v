@@ -90,20 +90,23 @@ module Main(
 	 /*********************************************************************************************/
 	 
 	 wire clk23MHz;
-    wire clk0;
-	 
+   wire clk0;
+	 wire clkdv;
+
 	 DCM_SP #( 
-        .CLKFX_DIVIDE(13),
-        .CLKFX_MULTIPLY(12),      
-        .CLKIN_PERIOD(39.721946)
+        .CLKDV_DIVIDE(8.0),
+        .CLKFX_DIVIDE(25),
+        .CLKFX_MULTIPLY(6),
+        .CLKIN_PERIOD(10.0)
     ) DCM0 (
         .CLK0(clk0),
-        .CLKFX(clk23MHz),
+        .CLKDV(clkdv),
+        .CLKFX(clk23MHz), // 24mhz
         .CLKFB(clk0),
-        .CLKIN(clk25MHz),
+        .CLKIN(clk),
         .RST(1'b0)
-    );	 
-	 
+    );
+
 	 assign xclk = clk23MHz;
 	 
    assign vgaclk = VGAClk;
@@ -154,11 +157,11 @@ module Main(
 											  .writeBufClk(pclk),
 											  .writeBufWE(camhorz),
 											  .readBufAddr(readBufAddr), .readBufData(readBufData),
-											  .readBufClk(VGAClk), .LB(LB), .UB(UB), .OE(OE), .WE(WE), .ADV(ADV), .CE(CE),
+											  .readBufClk(clkdv), .LB(LB), .UB(UB), .OE(OE), .WE(WE), .ADV(ADV), .CE(CE),
 											  .CRE(CRE), .RAM_CLK(RAM_CLK), .O_WAIT(O_WAIT), .A(A), .DQ(DQ));
 											  
 	 //VGA controller.
-	 VGA vga_cont(.clk25MHz(clk25MHz), .VGAData(readBufData), .VGAAddress(readBufAddr), .VGAClk(VGAClk), .vga(vga),
+	 VGA vga_cont(.clk25MHz(clk25MHz), .clkdv (clkdv), .VGAData(readBufData), .VGAAddress(readBufAddr), .VGAClk(VGAClk), .vga(vga),
 	              .hsync(hsync), .vsync(vsync), .frameInterrupt(frameInterrupt), .dataInterrupt(dataInterrupt), .blank(blank));
 	
      //I2C controller.

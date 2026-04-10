@@ -1015,6 +1015,7 @@ module mt45w8mw16bgx ( // model_verilog
                 // Advance address
                 if (burst_wrap === 1'b0) begin
                     // Wrap within the burst length
+                    //$display ("%t burst_wrap=0, burst_length %d (0x%h)", $time, burst_length, burst_length);
                     case (burst_length)
                         3'b001  : sync_addr_in [1 : 0] = sync_addr_in [1 : 0] + 1;
                         3'b010  : sync_addr_in [2 : 0] = sync_addr_in [2 : 0] + 1;
@@ -1024,7 +1025,9 @@ module mt45w8mw16bgx ( // model_verilog
                     endcase
                 end else begin
                     // Row end
+                    //$display ("%t burst_wrap/=0, burst_length %d (0x%h)", $time, burst_length, burst_length);
                     if ((sync_data_out_enable === 1'b1) && (burst_wrap === 1'b1)) begin
+                    //$display ("%t burst_wrap/=0 2, burst_length %d (0x%h)", $time, burst_length, burst_length);
                         if (sync_addr_in [6:0] === 127) begin
                             row_end = 1'b1;
                             row_count = latency_counter + 1;
@@ -1120,6 +1123,7 @@ module mt45w8mw16bgx ( // model_verilog
             if (sync_data_in_enable && (wait_polarity === ~oWait) && (row_end === 1'b0)) begin
                 if (burst_wrap === 1'b0) begin
                     // Wrap within the burst length
+                    //$display ("%t burst_wrap=0, burst_length %d (0x%h)", $time, burst_length, burst_length);
                     case (burst_length)
                         3'b001  : sync_addr_in [1 : 0] = sync_addr_in [1 : 0] + 1;
                         3'b010  : sync_addr_in [2 : 0] = sync_addr_in [2 : 0] + 1;
@@ -1132,6 +1136,7 @@ module mt45w8mw16bgx ( // model_verilog
                     if ((sync_data_in_enable === 1'b1) &&
                         (sync_addr_in [6 : 0] === 127) && 
                         (burst_wrap === 1'b1)) begin
+                        //$display ("%t burst_wrap/=0, burst_length %d (0x%h)", $time, burst_length, burst_length);
                         if (wait_configuration) begin
                             if (debug3) $display ($time, "  oWait Trigger 13");
                             rwait = wait_polarity;

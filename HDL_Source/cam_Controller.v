@@ -31,16 +31,16 @@ module cam_Controller(
                 counterStart <= 1;
           end
           
-//          if(pixelCounter == 1560) begin
-          if(pixelCounter == 780) begin
+          if(pixelCounter == 1560) begin
+//          if(pixelCounter == 780) begin
               counterStart <= 0;
           end
           
           if(counterStart)
               pixelCounter <= pixelCounter + 1;
                 
-//          if(pixelCounter == 780 || pixelCounter == 1560)
-          if(pixelCounter == 780)
+          if(pixelCounter == 780 || pixelCounter == 1560)
+//          if(pixelCounter == 780)
 //          if(pixelCounter == 1560)
               dataInterrupt <= 1;
      end
